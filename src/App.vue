@@ -3,13 +3,34 @@
     alt="Vue logo"
     src="./assets/logo.png"
   >
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <HelloWorld
+    ref="helloWorld"
+    msg="Hello Vue 3 + TypeScript + Vite"
+    :abc="123"
+    :obj="{name:'lux',age:12}"
+  />
 </template>
 
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+<script lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent, onMounted, ref } from 'vue'
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    HelloWorld
+  },
+  setup () {
+    const helloWorld = ref<InstanceType<typeof HelloWorld> | null>(null)
+    onMounted(() => {
+      console.log(helloWorld.value?.msg)
+    })
+    return {
+      helloWorld
+    }
+  }
+})
+
 </script>
 
 <style>
